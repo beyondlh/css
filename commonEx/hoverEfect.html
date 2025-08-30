@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS鼠标移入高亮效果</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            max-width: 800px;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, #3498db, #2ecc71);
+            border-radius: 2px;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #7f8c8d;
+            margin-top: 20px;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-direction: column;
+            height: 300px;
+        }
+
+        .card-header {
+            padding: 20px;
+            text-align: center;
+            background: #3498db;
+            color: white;
+        }
+
+        .card-content {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .effect-demo {
+            width: 150px;
+            height: 150px;
+            background: #f8f9fa;
+            border: 2px dashed #ddd;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            text-align: center;
+            padding: 15px;
+            transition: all 0.3s ease;
+        }
+
+        /* 效果1：边框高亮 */
+        .border-highlight .effect-demo {
+            border: 2px solid #ddd;
+        }
+
+        .border-highlight:hover .effect-demo {
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px #3498db33;
+        }
+
+        /* 效果2：背景色变化 */
+        .bg-change:hover .effect-demo {
+            background-color: #2ecc71;
+            color: white;
+        }
+
+        /* 效果3：阴影效果 */
+        .shadow-effect:hover .effect-demo {
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            transform: translateY(-5px);
+        }
+
+        /* 效果4：缩放效果 */
+        .scale-up:hover .effect-demo {
+            transform: scale(1.05);
+        }
+
+        /* 效果5：渐变边框 */
+        .gradient-border {
+            position: relative;
+        }
+
+        .gradient-border::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 12px;
+            padding: 3px;
+            background: linear-gradient(45deg, #3498db, #2ecc71);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gradient-border:hover::before {
+            opacity: 1;
+        }
+
+        /* 效果6：3D翻转 */
+        .flip-effect {
+            perspective: 1000px;
+        }
+
+        .flip-effect .effect-demo {
+            transform-style: preserve-3d;
+        }
+
+        .flip-effect:hover .effect-demo {
+            transform: rotateY(180deg);
+        }
+
+        .footer {
+            margin-top: 50px;
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+                max-width: 500px;
+            }
+
+            h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    <h1>CSS鼠标移入高亮效果</h1>
+    <p class="subtitle">将鼠标悬停在下面的卡片上查看不同的高亮效果</p>
+</div>
+
+<div class="container">
+    <div class="card border-highlight">
+        <div class="card-header">
+            <h2>边框高亮</h2>
+        </div>
+        <div class="card-content">
+            <div class="effect-demo">鼠标移入时显示蓝色边框和高亮</div>
+        </div>
+    </div>
+
+    <div class="card bg-change">
+        <div class="card-header">
+            <h2>背景色变化</h2>
+        </div>
+        <div class="card-content">
+            <div class="effect-demo">鼠标移入时背景色变为绿色</div>
+        </div>
+    </div>
+
+    <div class="card shadow-effect">
+        <div class="card-header">
+            <h2>阴影效果</h2>
+        </div>
+        <div class="card-content">
+            <div class="effect-demo">鼠标移入时显示阴影并向上移动</div>
+        </div>
+    </div>
+
+    <div class="card scale-up">
+        <div class="card-header">
+            <h2>缩放效果</h2>
+        </div>
+        <div class="card-content">
+            <div class="effect-demo">鼠标移入时轻微放大</div>
+        </div>
+    </div>
+
+    <div class="card gradient-border">
+        <div class="card-header">
+            <h2>渐变边框</h2>
+        </div>
+        <div class="card-content">
+            <div class="effect-demo">鼠标移入时显示渐变边框</div>
+        </div>
+    </div>
+
+    <div class="card flip-effect">
+        <div class="card-header">
+            <h2>3D翻转</h2>
+        </div>
+        <div class="card-content">
+            <div class="effect-demo">鼠标移入时进行3D翻转</div>
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+    <p>CSS鼠标交互效果展示 - 使用纯CSS实现</p>
+</div>
+</body>
+</html>
